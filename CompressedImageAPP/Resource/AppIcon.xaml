@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DrawingImage x:Key="AppIcon" >
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- 组合变换：先旋转180°，再水平镜像 -->
+                <DrawingGroup.Transform>
+                    <TransformGroup>
+                        <!-- 旋转180°（中心点为默认0,0） -->
+                        <RotateTransform Angle="180" CenterX="0.5" CenterY="0.5"/>
+                        <!-- 水平镜像（ScaleX=-1） -->
+                        <ScaleTransform ScaleX="-1" ScaleY="1"/>
+                    </TransformGroup>
+                </DrawingGroup.Transform>
+
+
+                <GeometryDrawing Brush="#2196F3">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M189 657l779 0c8 0 15-3 20-8 4-4 7-10 7-16l1-676c0-7-3-15-9-20-4-4-10-7-16-8l-4 0-779 0c-12 0-22 7-26 17l-1 4 0 681c1 14 11 24 24 26l4 0 779 0-779 0z m750-57l-721 0 0-484 92 0 105 227c2 5 8 9 14 9 4 0 9-1 13-5l1-2 76-110c3-4 7-6 12-7 3 0 7 1 10 3l2 1 49 41c5 5 13 5 19 1l3-2 87-87c3-3 8-5 12-5 4 1 7 2 10 4l2 2 22 27c4 3 8 5 13 5 4 0 8-2 11-4l2-2 74-96 92 0 0 484z m-205-136c29 0 53-23 53-52 0-29-24-53-53-53-29 0-52 24-52 53 0 29 23 52 52 52z"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#1976D2">
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="M28 817l781 0c7 0 15-3 20-9 4-4 7-10 8-16l0-4 0-105-58 0 0 77-722 0 0-483 78 0 0-188-107 0c-7 0-14 3-20 8-4 4-7 10-8 16l0 4 0 671c0 8 3 15 8 20 5 5 11 8 17 8l3 1 781 0-781 0z"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+</ResourceDictionary>

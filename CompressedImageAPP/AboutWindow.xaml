@@ -1,0 +1,110 @@
+﻿<Window x:Class="CompressedImageAPP.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CompressedImageAPP"
+        mc:Ignorable="d"
+        Title="关于本软件" 
+        Width="400" 
+        Height="500"
+        Icon="{StaticResource AppIcon}"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True">
+    <Border Margin="5" Padding="10" Background="White"  CornerRadius="5">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="5" 
+                             ShadowDepth="0" 
+                             Color="#40000000" 
+                             />
+        </Border.Effect>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- 标题 -->
+            <TextBlock Text="图片压缩工具" Grid.Row="0"
+               FontSize="20" 
+               FontWeight="Bold"
+               Margin="0,0,0,10"
+               HorizontalAlignment="Center"/>
+
+            <!-- 版本信息 -->
+            <TextBlock x:Name="VersionText" Grid.Row="1"
+               Margin="0,0,0,20"
+               HorizontalAlignment="Center"/>
+
+
+
+            <!-- 描述 -->
+            <TextBlock Text="这是一个完全免费的高效的图片压缩和格式转换工具，支持多种图片格式互转，支持调整压缩率,图片分辨率和图片格式。"
+               TextWrapping="Wrap" Grid.Row="2" FontSize="{StaticResource DefaultFontSize}"
+               Margin="0,0,0,20"
+               HorizontalAlignment="Center"/>
+
+            <!-- 二维码区域 -->
+            <StackPanel Orientation="Horizontal" Grid.Row="3"
+                HorizontalAlignment="Center"
+                Margin="0,30,0,15">
+                <StackPanel.Effect>
+                    <DropShadowEffect BlurRadius="10" 
+                            ShadowDepth="0" 
+                            Color="#40000000" 
+                            />
+                </StackPanel.Effect>
+
+                <!-- 支付宝二维码 -->
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="支付宝"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,5"/>
+                    <Image Source="pack://application:,,,/Resource/1.png"
+                   Width="150"
+                   Height="150"/>
+                </StackPanel>
+
+                <!-- 微信二维码 -->
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="微信"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,5"/>
+                    <Image Source="pack://application:,,,/Resource/2.png"
+                   Width="150"
+                   Height="150"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 赞助提示 -->
+            <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Center">
+
+                <TextBlock Text="&#xf00c;&#xf00c;&#xf00c;" Style="{ StaticResource IcoFont}"
+                               HorizontalAlignment="Center" Foreground="Orange" FontSize="25"
+                               VerticalAlignment="Center">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="10" 
+                            ShadowDepth="0" 
+                            Color="#40000000" 
+                            />
+                </TextBlock.Effect>
+                </TextBlock>
+
+                <TextBlock Text="觉得还不错，请作者喝杯茶" TextDecorations="Underline"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+               
+            </StackPanel>
+
+            <!-- 关闭按钮 -->
+            <Button Content="关闭" Grid.Row="5" Style="{StaticResource ActionButton}" VerticalAlignment="Bottom"
+            Click="CloseButton_Click"/>
+        </Grid>
+    </Border>
+        
+</Window>
