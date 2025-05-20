@@ -85,6 +85,14 @@ namespace CompressedImageAPP.ViewModels
         private int _totalFiles;
         private int _processedFiles;
 
+        [ObservableProperty]
+        private bool _isAutoRotateToHorizontal = true;
+        [ObservableProperty]
+        private bool _isRotateByAngle = false;
+        [ObservableProperty]
+        private uint _imageRotateAngle = 90;
+        
+
         partial void OnIsOutputToSourceFolderChanged(bool value)
         {
             if (value)
@@ -358,6 +366,7 @@ namespace CompressedImageAPP.ViewModels
             string ImagePath = item.SourceFilePath;
             string outputFileName = $"{Path.GetFileNameWithoutExtension(ImagePath)}.{OutputFormat.ToLower()}";
             using var image = new MagickImage(ImagePath);
+            image.AutoOrient();
             image.Quality = ImageQuality;
             switch (OutputFormat.ToLower())
             {
@@ -415,6 +424,14 @@ namespace CompressedImageAPP.ViewModels
             {
                 magickGeometry = new MagickGeometry($"{ImageWidth}x{ImageHeight}!");
             }
+            if (IsAutoRotateToHorizontal)
+            {
+                if (image.Height > image.Width)
+                {
+                    image.Rotate(270);
+                    //Debug.WriteLine($"{ImagePath}");
+                }
+            }
             image.Resize(magickGeometry);
             string outputPath = Path.Combine(outputFolder, outputFileName);
             if (File.Exists(outputPath) && IsAutoRename)
@@ -422,6 +439,10 @@ namespace CompressedImageAPP.ViewModels
                 outputPath = Path.Combine(outputFolder, $"{Path.GetFileNameWithoutExtension(outputPath)}_{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.{OutputFormat.ToLower()}");
             }
             Directory.CreateDirectory(outputFolder);
+
+            if (IsRotateByAngle) {
+                image.Rotate(ImageRotateAngle);
+            }
             image.Write(outputPath);
             var fileInfo = new FileInfo(outputPath);
             item.CompressedFilePath = fileInfo.FullName;
