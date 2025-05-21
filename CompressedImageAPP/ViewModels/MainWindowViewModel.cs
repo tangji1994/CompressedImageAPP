@@ -85,6 +85,8 @@ namespace CompressedImageAPP.ViewModels
         private uint _imageRotateAngle = 0;
         [ObservableProperty]
         private bool _isAutoStretchingBackground = true;
+        [ObservableProperty]
+        private uint _imageDPI = 72;
 
         partial void OnIsOutputToSourceFolderChanged(bool value)
         {
@@ -377,6 +379,7 @@ namespace CompressedImageAPP.ViewModels
             using var image = new MagickImage(ImagePath);
             image.AutoOrient();
             image.Quality = ImageQuality;
+            image.Density = new Density(ImageDPI);
             switch (OutputFormat.ToLower())
             {
                 case "jpg":

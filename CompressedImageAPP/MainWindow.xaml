@@ -250,9 +250,18 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
                                             <RadioButton Grid.Column="0" x:Name="IsZoomByScale" GroupName="ZoomOptions" IsChecked="{Binding IsZoomByScale}" VerticalAlignment="Center"  Content="按原图比例缩放" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" Cursor="Hand"/>
                                             <RadioButton Grid.Column="1" x:Name="IsZoomBySize" GroupName="ZoomOptions" IsChecked="{Binding IsZoomBySize}" VerticalAlignment="Center" Content="指定宽和高缩放" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" Cursor="Hand"/>
+                                            <Grid Grid.Column="2" Margin="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="设置DPI" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" VerticalAlignment="Center"/>
+                                                <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  Margin="3 0 10 0" Text="{Binding ImageDPI}"/>
+                                            </Grid>
                                         </Grid>
 
                                         <Grid Grid.Row="1">
