@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Security.Authentication;
 using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ImageMagick;
@@ -52,15 +48,15 @@ namespace CompressedImageAPP.ViewModels
         [ObservableProperty]
         private uint _imageHeight = 186;
         [ObservableProperty]
-        private bool _isZoomByScale = true;
+        private bool _isZoomByScale = false;
         [ObservableProperty]
-        private bool _isZoomBySize = false;
+        private bool _isZoomBySize = true;
         [ObservableProperty]
-        private bool _isZoomByPercentage = false;
+        private bool _isZoomByPercentage = true;
         [ObservableProperty]
         private bool _isZoomByWidth = false;
         [ObservableProperty]
-        private bool _isZoomByHeight = true;
+        private bool _isZoomByHeight = false;
         [ObservableProperty]
         private bool _isOutputToSourceFolder = false;
         [ObservableProperty]
@@ -86,12 +82,9 @@ namespace CompressedImageAPP.ViewModels
         private int _processedFiles;
 
         [ObservableProperty]
-        private bool _isAutoRotateToHorizontal = true;
+        private uint _imageRotateAngle = 0;
         [ObservableProperty]
-        private bool _isRotateByAngle = false;
-        [ObservableProperty]
-        private uint _imageRotateAngle = 90;
-        
+        private bool _isAutoStretchingBackground = true;
 
         partial void OnIsOutputToSourceFolderChanged(bool value)
         {
@@ -230,6 +223,22 @@ namespace CompressedImageAPP.ViewModels
             }
         }
 
+        [RelayCommand]
+        private void SetImageRotateAngle0() {
+            ImageRotateAngle = 0;
+        }
+        [RelayCommand]
+        private void SetImageRotateAngle90() {
+            ImageRotateAngle = 90;
+        }
+        [RelayCommand]
+        private void SetImageRotateAngle180() {
+            ImageRotateAngle = 180;
+        }
+        [RelayCommand]
+        private void SetImageRotateAngle270() {
+            ImageRotateAngle = 270;
+        }
 
         [RelayCommand]
         private void SetOutputFolder()
@@ -419,20 +428,31 @@ namespace CompressedImageAPP.ViewModels
                 {
                     magickGeometry = new MagickGeometry($"{ImageWidth}x");
                 }
+                image.Resize(magickGeometry);
             }
             if (IsZoomBySize)
             {
-                magickGeometry = new MagickGeometry($"{ImageWidth}x{ImageHeight}!");
-            }
-            if (IsAutoRotateToHorizontal)
-            {
-                if (image.Height > image.Width)
+                if (IsAutoStretchingBackground && image.Width > 0 && ImageWidth > 0)
                 {
-                    image.Rotate(270);
-                    //Debug.WriteLine($"{ImagePath}");
+                    if((decimal)image.Height/ (decimal)image.Width >= (decimal)ImageHeight / (decimal)ImageWidth)
+                    {
+                        magickGeometry = new MagickGeometry($"x{ImageHeight}");
+                    }
+                    else
+                    {
+                        magickGeometry = new MagickGeometry($"{ImageWidth}x");
+                    }
+                    image.Resize(magickGeometry);
+                    image.Extent(ImageWidth, ImageHeight, Gravity.Center, MagickColors.White);
+                }
+                else
+                {
+                    magickGeometry = new MagickGeometry($"{ImageWidth}x{ImageHeight}!");
+                    image.Resize(magickGeometry);
                 }
             }
-            image.Resize(magickGeometry);
+            
+
             string outputPath = Path.Combine(outputFolder, outputFileName);
             if (File.Exists(outputPath) && IsAutoRename)
             {
@@ -440,9 +460,7 @@ namespace CompressedImageAPP.ViewModels
             }
             Directory.CreateDirectory(outputFolder);
 
-            if (IsRotateByAngle) {
-                image.Rotate(ImageRotateAngle);
-            }
+            image.Rotate(ImageRotateAngle);
             image.Write(outputPath);
             var fileInfo = new FileInfo(outputPath);
             item.CompressedFilePath = fileInfo.FullName;

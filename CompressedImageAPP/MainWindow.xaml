@@ -303,8 +303,8 @@
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Row="1" Margin="0 6 0 0"  Grid.ColumnSpan="2" TextWrapping="Wrap" Text="指定的高和宽的比例与原图不一致时，图片可能会变形。" 
-                                                   FontSize="{StaticResource SmallFontSize}" Foreground="{StaticResource SecondaryLightBlue}" VerticalAlignment="Center"/>
+                                                <CheckBox Grid.Row="1" Margin="0 6 0 0" IsChecked="{Binding IsAutoStretchingBackground}" Grid.ColumnSpan="2" Content="指定的高和宽的比例与原图不一致时，自动调整图片背景保持比例。" 
+                                                   FontSize="{StaticResource SmallFontSize}" VerticalAlignment="Center"/>
                                                 <Grid Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
@@ -333,26 +333,23 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" TextWrapping="Wrap" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0 0 0 6" Text="图片方向设置"/>
+                                    <TextBlock Grid.Row="0" TextWrapping="Wrap" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Margin="0 0 0 6" Text="图片旋转设置"/>
                                     <Grid Grid.Row="1">
-                                        <Grid.Resources>
-                                            <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-                                        </Grid.Resources>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <CheckBox Grid.Column="0" IsChecked="{Binding IsAutoRotateToHorizontal}" VerticalAlignment="Center"  Content="自动把竖向图片旋转为横向" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" Cursor="Hand"/>
-                                            <CheckBox Grid.Column="1" IsChecked="{Binding IsRotateByAngle}" VerticalAlignment="Center" Content="指定旋转角度" FontSize="{StaticResource DefaultFontSize}" Foreground="{StaticResource DarkText}" Cursor="Hand"/>
-                                        </Grid>
-                                        <Grid Grid.Row="1" Visibility="{Binding IsRotateByAngle, Converter={StaticResource BoolToVisibilityConverter}}">
-                                            <Slider Style="{StaticResource ImageRotateAngleSlider}" Value="{Binding ImageRotateAngle}" AutoToolTipPlacement="TopLeft" IsMoveToPointEnabled="True"/>
-                                        </Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Command="{Binding SetImageRotateAngle0Command}" Content="旋转0°" Style="{StaticResource ImageRotateAngleButton}"/>
+                                        <Button Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Command="{Binding SetImageRotateAngle90Command}" Content="旋转90°" Style="{StaticResource ImageRotateAngleButton}"/>
+                                        <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Command="{Binding SetImageRotateAngle180Command}" Content="旋转180°" Style="{StaticResource ImageRotateAngleButton}"/>
+                                        <Button Grid.Column="3" Grid.Row="0" VerticalAlignment="Center" Command="{Binding SetImageRotateAngle270Command}" Content="旋转270°" Style="{StaticResource ImageRotateAngleButton}"/>
+                                        <Slider Grid.ColumnSpan="4" Grid.Row="1" Style="{StaticResource ImageRotateAngleSlider}" Value="{Binding ImageRotateAngle}" AutoToolTipPlacement="TopLeft" IsMoveToPointEnabled="True"/>
                                     </Grid>
                                 </Grid>
                             </Border>
